@@ -57,6 +57,11 @@ for _, name in pairs(default_nodes) do
 	local ndef = table.copy(minetest.registered_nodes[nodename])
 	ndef.sunlight_propagates = true
 
+	-- Workaround to fix node orientation (minetest >= 0.4.17.1)
+	if ndef.place_param2 == 0 then
+	   ndef.place_param2 = nil
+	end
+
 	-- Stone and desert_stone drop cobble and desert_cobble respectively.
 	if type(ndef.drop) == "string" then
 		ndef.drop = ndef.drop:gsub(".+:", "")
